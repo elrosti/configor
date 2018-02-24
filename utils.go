@@ -12,6 +12,7 @@ import (
 
 	"github.com/BurntSushi/toml"
 	yaml "gopkg.in/yaml.v2"
+	"time"
 )
 
 func (configor *Configor) getENVPrefix(config interface{}) string {
@@ -183,6 +184,11 @@ func (configor *Configor) processTags(config interface{}, prefixes ...string) er
 					}
 				}
 			}
+		}
+
+		if field.Type() == reflect.TypeOf((*time.Duration)(nil)).Elem() {
+			result := time.Duration(field.Int()) * time.Millisecond
+			field.Set(reflect.ValueOf(result))
 		}
 	}
 	return nil
