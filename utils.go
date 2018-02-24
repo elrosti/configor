@@ -190,6 +190,11 @@ func (configor *Configor) processTags(config interface{}, prefixes ...string) er
 			result := time.Duration(field.Int()) * time.Millisecond
 			field.Set(reflect.ValueOf(result))
 		}
+
+		if field.Type() == reflect.TypeOf((*EnvironmentVariable)(nil)).Elem() {
+			result := os.Getenv(field.String())
+			field.SetString(result)
+		}
 	}
 	return nil
 }

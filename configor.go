@@ -17,6 +17,8 @@ type Config struct {
 	Verbose     bool
 }
 
+type EnvironmentVariable string
+
 // New initialize a Configor
 func New(config *Config) *Configor {
 	if config == nil {
